@@ -8,6 +8,8 @@ import {
   FileClock
 } from "lucide-react";
 
+import nuhorilogo from "../assets/images/nulogohorizontal.png";
+
 const DashNavBar = ({
   isSidebarFolded,
   toggleSidebar,
@@ -73,7 +75,7 @@ const DashNavBar = ({
               {/* <img className="w-44" src={logoBlue} alt="metriccon-logo" /> */}
               <img
                 className="w-40"
-                src="/src/assets/images/nulogohorizontal.png"
+                src={nuhorilogo}
                 alt="nu-logo"
               />
               {/* <span className="ml-2">Metriccon</span> */}

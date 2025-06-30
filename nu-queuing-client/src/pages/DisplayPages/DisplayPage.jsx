@@ -4,7 +4,7 @@ import { fetchQueuesByDepartment } from "../../services/QueueService";
 import { fetchWindowsByDepartment } from "../../services/WindowService";
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import nuhorilogo from "../../assets/images/nulogohorizontal-blue.jpg";
 const DisplayPage = () => {
   const [processing, setProcessing] = useState(null);
   const [windowCount, setWindowCount] = useState(0);
@@ -79,7 +79,7 @@ const DisplayPage = () => {
         {/* Header */}
         <div className="text-center mb-4 md:mb-8">
           <img
-            src="/src/assets/images/nulogohorizontal-blue.jpg"
+            src={nuhorilogo}
             alt="NU Logo"
             className="max-w-[300px] md:max-w-[400px] mx-auto mb-3 md:mb-5"
           />

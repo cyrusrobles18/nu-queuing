@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import nuhorilogo from "../../assets/images/nulogohorizontal-blue.jpg";
+import nuhorilogoBlue from "../../assets/images/nulogohorizontal-blue.jpg";
 const KioskPage = () => {
   const [showGuide, setShowGuide] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const KioskPage = () => {
         <div className="flex flex-1 flex-col items-center justify-center bg-white text-[#32418C] rounded-br-[40px] rounded-tr-[40px] md:border-r-8 border-[#FBD117] shadow-lg">
           <div className="relative w-full h-full flex flex-col items-center justify-center">
             <img
-              src={nuhorilogo}
+              src={nuhorilogoBlue}
               alt="NU Logo"
               className="absolute top-10 left-1/2 -translate-x-1/2 w-4/5 max-w-[300px]"
             />
