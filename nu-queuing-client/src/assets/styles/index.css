@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@font-face {
+  font-family: 'Clan-OT';
+  src: url('../src/assets/fonts/ClanOT-News.ttf');
+}
+
+@import "tailwindcss";
+
+
+
+@theme{
+  --font-clan-ot: Clan-OT, sans-serif;
+  --font-inter:  Inter, sans-serif;
+  --font-poppins: Poppins, sans-serif;
+  --font-lora: Lora, serif;
+
+  /* Colors */
+  --color-nu-blue: #32418C;
+  --color-nu-gold: #FBD117;
+  --color-nu-blue-dark: #222e6a;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-0.75rem); }
+}
+
+.animate-bounce {
+  animation: bounce 1.2s infinite alternate;
+}
+
+.queue-bounce-enter {
+  opacity: 0;
+  transform: scale(0.7) translateY(40px);
+}
+.queue-bounce-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.queue-bounce-exit {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.queue-bounce-exit-active {
+  opacity: 0;
+  transform: scale(0.7) translateY(-40px);
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
