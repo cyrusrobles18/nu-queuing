@@ -12,6 +12,7 @@ nu-queuing-client/node_modules
 nu-queuing-client/dist
 nu-queuing-client/dist-ssr
 nu-queuing-client/*.local
+nu-queuing-client/.env
 
 # Editor directories and files
 nu-queuing-client/.vscode/*
@@ -46,3 +47,4 @@ nu-queuing-server/*.ntvs*
 nu-queuing-server/*.njsproj
 nu-queuing-server/*.sln
 nu-queuing-server/*.sw?
+nu-queuing-server/.env
