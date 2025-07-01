@@ -10,6 +10,8 @@ import {
 
 import nuhorilogo from "../assets/images/nulogohorizontal.png";
 
+import nuShield from "../assets/images/nu-shield.png";
+
 const DashNavBar = ({
   isSidebarFolded,
   toggleSidebar,
@@ -90,7 +92,7 @@ const DashNavBar = ({
               <div className="flex flex-col items-center">
                 <img
                   className="w-10 items-center justify-center object-center"
-                  src={nuhorilogo}
+                  src={nuShield}
                   alt="nu-logo"
                 />
                 <PanelLeftOpen className=" mt-7" />
