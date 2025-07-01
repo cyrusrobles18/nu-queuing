@@ -90,7 +90,7 @@ const DashNavBar = ({
               <div className="flex flex-col items-center">
                 <img
                   className="w-10 items-center justify-center object-center"
-                  src="/src/assets/images/nu-shield.png"
+                  src={nuhorilogo}
                   alt="nu-logo"
                 />
                 <PanelLeftOpen className=" mt-7" />
