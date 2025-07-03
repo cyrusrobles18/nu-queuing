@@ -16,3 +16,9 @@ export const updateQueueStatus = (id, status) =>
   API.put(`/${id}/status`, { status });
 
 export const deleteQueue = (id) => API.delete(`/${id}`);
+
+export const updateQueueWindowNumber = (id, windowNumber) =>
+  API.put(`/${id}/window`, { windowNumber });
+
+export const updateTransaction = (id, transaction, department) =>
+  API.put(`/${id}/transaction`, { transaction, department });

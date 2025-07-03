@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import nuhorilogo from "../../assets/images/nulogohorizontal-blue.jpg";
 const DisplayPage = () => {
   const [processing, setProcessing] = useState(null);
+  const [processingQueues, setProcessingQueues] = useState([]);
   const [windowCount, setWindowCount] = useState(0);
   const [windowList, setWindowList] = useState([]);
   const navigate = useNavigate();
@@ -26,8 +27,11 @@ const DisplayPage = () => {
       if (Array.isArray(queueData)) {
         const current = queueData.find((q) => q.status === "Processing");
         setProcessing(current ? current.queueNumber : null);
+        // Get all processing queues (for all windows)
+        setProcessingQueues(queueData.filter(q => q.status === "Processing" && q.windowNumber));
       } else {
         setProcessing(null);
+        setProcessingQueues([]);
       }
       // Fetch windows
       const { data: windowData } = await fetchWindowsByDepartment(
@@ -42,6 +46,7 @@ const DisplayPage = () => {
       }
     } catch {
       setProcessing(null);
+      setProcessingQueues([]);
       setWindowList([]);
       setWindowCount(0);
     }
@@ -96,24 +101,24 @@ const DisplayPage = () => {
         {/* Main Content */}
         <div className="flex items-center justify-center flex-col md:flex-row gap-8 w-full ">
           {/* Recent Queue Display */}
-          <div className="w-full max-w-4xl flex flex-col items-center md:mb-4">
+          {/* <div className="w-full max-w-4xl flex flex-col items-center md:mb-4">
             <div className="text-center">
               <h2 className="text-3xl text-[#32418C] font-semibold mb-4">
                 Now Serving
               </h2>
               <div className="text-9xl px-20 py-30 md:text-9xl font-bold text-[#32418C] bg-white/80 rounded-2xl flex items-center justify-center shadow-lg border-4 border-[#32418C]/30">
                 {processing || "---"}
-              </div>
+              </div> */}
               {/* Window Count Display */}
-              <div className="mt-6 text-lg text-gray-700 font-medium">
+              {/* <div className="mt-6 text-lg text-gray-700 font-medium">
                 Available Windows:{" "}
                 <span className="font-bold">{windowCount}</span>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Service Windows */}
           <div className="w-full items-center justify-center  ">
-            <h3 className="text-[#32418C] text-xl md:text-2xl font-semibold text-center mb-4">
+            <h3 className="text-[#32418C] text-2xl md:text-2xl font-semibold text-center mb-4">
               Service Windows
             </h3>
             <div
@@ -125,22 +130,25 @@ const DisplayPage = () => {
             >
               {windowList
                 .filter((window) => window.isActive)
-                .map((window) => (
-                  <div
-                    key={window._id}
-                    className="bg-white/90 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center shadow-lg border-2 border-[#32418C]/20"
-                  >
-                    <h3 className="text-[#32418C] text-lg font-medium mb-2">
-                      Window #{window.windowNumber}
-                    </h3>
-                    <div className="text-3xl md:text-4xl font-bold text-[#32418C] bg-white p-10 flex items-center justify-center rounded-lg border-2 border-[#32418C]/30">
-                      Active
+                .map((window) => {
+                  const queueForWindow = processingQueues.find(q => q.windowNumber === window.windowNumber);
+                  return (
+                    <div
+                      key={window._id}
+                      className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 flex flex-col items-center shadow-2xl border-4 border-[#32418C]/20 min-w-[220px] min-h-[220px] md:min-w-[260px] md:min-h-[260px] lg:min-w-[300px] lg:min-h-[300px]"
+                    >
+                      <h3 className="text-[#32418C] text-3xl font-semibold mb-4">
+                        Window #{window.windowNumber}
+                      </h3>
+                      <div className="text-5xl md:text-4xl font-extrabold text-[#32418C] bg-white p-16 flex items-center justify-center rounded-xl border-4 border-[#32418C]/30 mb-2">
+                        {queueForWindow ? queueForWindow.queueNumber : "---"}
+                      </div>
+                      <div className="mt-4 text-lg text-gray-600">
+                        {window.transaction}
+                      </div>
                     </div>
-                    <div className="mt-2 text-sm text-gray-500">
-                      {window.transaction}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           </div>
         </div>

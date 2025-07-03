@@ -50,6 +50,44 @@ const QueueController = {
       res.status(500).json({ message: "Error updating queue status", error });
     }
   },
+  updateQueueWindowNumber: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { windowNumber } = req.body;
+      const queue = await Queue.findByIdAndUpdate(
+        id,
+        { windowNumber },
+        { new: true }
+      );
+      if (!queue) {
+        return res.status(404).json({ message: "Queue not found" });
+      }
+      // Emit queue update event
+      req.app.get('io').emit('queue:update', { department: queue.department });
+      res.json(queue);
+    } catch (error) {
+      res.status(500).json({ message: "Error updating queue window number", error });
+    }
+  },
+  updateTransaction: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { transaction, department } = req.body;
+      const queue = await Queue.findByIdAndUpdate(
+        id,
+        { transaction, department },
+        { new: true }
+      );
+      if (!queue) {
+        return res.status(404).json({ message: "Queue not found" });
+      }
+      // Emit queue update event
+      req.app.get('io').emit('queue:update', { department: queue.department });
+      res.json(queue);
+    } catch (error) {
+      res.status(500).json({ message: "Error updating queue transaction", error });
+    }
+  },
   deleteQueue: async (req, res) => {
     try {
       const { id } = req.params;

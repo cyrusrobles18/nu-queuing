@@ -95,6 +95,7 @@ const UserController = {
         message: "Login successful",
         token,
         type: user.type,
+        userId: user._id,
         department: user.department,
         firstName: user.firstName,
         lastName: user.lastName,

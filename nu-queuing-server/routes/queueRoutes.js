@@ -6,6 +6,8 @@ const QueueController = require("../controllers/queueController");
 router.route("/").get(QueueController.getAllQueue).post(QueueController.createQueue);
 router.route("/:department").get(QueueController.getQueueByDepartment);
 router.route("/:id/status").put(QueueController.updateQueueStatus);
+router.route("/:id/window").put(QueueController.updateQueueWindowNumber);
+router.route("/:id/transaction").put(QueueController.updateTransaction);
 router.route("/:id").delete(QueueController.deleteQueue);
 
 module.exports = router;

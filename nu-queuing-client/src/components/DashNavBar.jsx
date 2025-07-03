@@ -5,7 +5,7 @@ import {
   LayoutDashboard,
   Users,
   Blocks,
-  FileClock
+  FileClock,
 } from "lucide-react";
 
 import nuhorilogo from "../assets/images/nulogohorizontal.png";
@@ -37,7 +37,8 @@ const DashNavBar = ({
       name: "Control Panel",
       path: "/dashboard/control",
       icon: <Blocks />,
-      roles: ["Head", "Staff"],
+      // roles: ["Head", "Staff"],
+      roles: ["Staff"],
     },
     {
       name: "Counters",
@@ -75,11 +76,7 @@ const DashNavBar = ({
           {!isSidebarFolded && (
             <div className="flex text-xl font-bold text-primary items-center">
               {/* <img className="w-44" src={logoBlue} alt="metriccon-logo" /> */}
-              <img
-                className="w-40"
-                src={nuhorilogo}
-                alt="nu-logo"
-              />
+              <img className="w-40" src={nuhorilogo} alt="nu-logo" />
               {/* <span className="ml-2">Metriccon</span> */}
             </div>
             // <img className="w-24" src={logoHori} alt="metriccon-logo" />

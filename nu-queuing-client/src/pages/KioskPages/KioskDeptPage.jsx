@@ -10,6 +10,7 @@ const KioskDeptPage = () => {
   const [userType] = useState(
     localStorage.getItem("userType") || "New Student"
   );
+  const [selectedTransaction, setSelectedTransaction] = useState("");
   const intervalRef = useRef(null);
   const navigate = useNavigate();
 
@@ -18,24 +19,24 @@ const KioskDeptPage = () => {
       title: "Treasury Office Transactions",
       transactions: [
         {
-          icon: treasuryIcon,
-          title: "Payment of Tuition Fees",
-          desc: "Settle your tuition and other school fees.",
+          title: "Payment for Balance",
+          desc: "Settle your outstanding balance.",
         },
         {
-          icon: receiptIcon,
-          title: "Request for Official Receipt",
-          desc: "Get an official receipt for your payments.",
+          title: "Payment for Enrollment",
+          desc: "Pay for your enrollment fees.",
         },
         {
-          icon: refundIcon,
-          title: "Refund Processing",
-          desc: "Apply for a refund of excess payments.",
+          title: "Payment for Promi",
+          desc: "Pay for promissory note.",
         },
         {
-          icon: servicesIcon,
-          title: "Other Treasury Services",
-          desc: "Inquire about other available treasury services.",
+          title: "Others",
+          desc: "Other treasury-related transactions.",
+        },
+        {
+          title: "Validation Concerns",
+          desc: "Concerns regarding validation.",
         },
       ],
     },
@@ -43,24 +44,32 @@ const KioskDeptPage = () => {
       title: "Registrar Office Transactions",
       transactions: [
         {
-          icon: transcriptIcon,
-          title: "Transcript Request",
-          desc: "Request for official transcript of records.",
+          title: "Request Assessment",
+          desc: "Request for Assessment Form.",
         },
         {
-          icon: verificationIcon,
-          title: "Enrollment Verification",
-          desc: "Get proof of your enrollment status.",
+          title: "Request COR",
+          desc: "Request for Certificate of Registration.",
         },
         {
-          icon: authenticationIcon,
-          title: "Document Authentication",
-          desc: "Authenticate your school documents.",
+          title: "Request TOR",
+          desc: "Request for Transcript of Records.",
         },
         {
-          icon: recordsIcon,
-          title: "Student Records Update",
-          desc: "Update your personal or academic records.",
+          title: "Request CTC",
+          desc: "Request for Certified True Copy.",
+        },
+        {
+          title: "Request for Dismissal",
+          desc: "Request for dismissal documents.",
+        },
+        {
+          title: "Others",
+          desc: "Other registrar-related transactions.",
+        },
+        {
+          title: "Validation Concerns",
+          desc: "Concerns regarding validation.",
         },
       ],
     },
@@ -68,24 +77,20 @@ const KioskDeptPage = () => {
       title: "Admissions Office Transactions",
       transactions: [
         {
-          icon: applicationIcon,
-          title: "Application Submission",
-          desc: "Submit your application for admission.",
+          title: "Enrollment",
+          desc: "Enrollment process.",
         },
         {
-          icon: examIcon,
-          title: "Entrance Exam Scheduling",
-          desc: "Schedule your entrance examination.",
+          title: "Submission of Documents",
+          desc: "Submit your admission documents.",
         },
         {
-          icon: requirementsIcon,
-          title: "Requirements Inquiry",
-          desc: "Ask about admission requirements.",
+          title: "Others",
+          desc: "Other admissions-related transactions.",
         },
         {
-          icon: statusIcon,
-          title: "Admission Status",
-          desc: "Check your application status.",
+          title: "Validation Concerns",
+          desc: "Concerns regarding validation.",
         },
       ],
     },
@@ -93,6 +98,7 @@ const KioskDeptPage = () => {
 
   const handleCardClick = (office) => {
     setSelectedOffice(office);
+    setSelectedTransaction("");
     setActiveModal("transaction");
   };
 
@@ -151,7 +157,8 @@ const KioskDeptPage = () => {
     try {
       await createQueue({
         department: selectedOffice,
-        transaction: "TEST",
+        transaction: selectedTransaction,
+        windowNumber: "",
         priority:
           userType == "Priority" || userType == "New Student" ? true : false,
         queueNumber: queueNumber,
@@ -254,12 +261,13 @@ const KioskDeptPage = () => {
           </h2>
           <div className="w-full mb-8">
             {modalData[selectedOffice].transactions.map((tx, index) => (
-              <div
+              <button
                 key={index}
-                className="flex items-start bg-gray-50 rounded-2xl shadow-sm p-5 mb-4"
+                className={`flex items-start bg-gray-50 rounded-2xl shadow-sm p-5 mb-4 w-full text-left border-2 transition-colors ${selectedTransaction === tx.title ? "border-nu-blue bg-blue-50" : "border-transparent"}`}
+                onClick={() => setSelectedTransaction(tx.title)}
               >
-                <span className="mr-6 flex items-center justify-center w-12 h-12 flex-shrink-0">
-                  {tx.icon}
+                <span className="mr-6 flex items-center justify-center w-12 h-12">
+                  {/* Optionally add icons here if needed */}
                 </span>
                 <div>
                   <span className="block text-nu-blue text-xl font-semibold mb-1">
@@ -267,7 +275,7 @@ const KioskDeptPage = () => {
                   </span>
                   <span className="block text-gray-500">{tx.desc}</span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
           <div className="flex justify-end gap-4 w-full mt-3">
@@ -279,7 +287,8 @@ const KioskDeptPage = () => {
             </button>
             <button
               onClick={handleContinue}
-              className="bg-nu-blue text-white rounded-lg text-lg font-semibold px-7 py-2 transition-colors hover:bg-nu-blue-dark"
+              className="bg-nu-blue text-white rounded-lg text-lg font-semibold px-7 py-2 transition-colors hover:bg-nu-blue-dark disabled:opacity-50"
+              disabled={!selectedTransaction}
             >
               Continue
             </button>

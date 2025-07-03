@@ -19,7 +19,9 @@ const LoginPage = () => {
         password: form.password,
       });
       // Store user session in localStorage
+      console.log("Login successful:", data);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.userId || "");
       localStorage.setItem("userType", data.type);
       localStorage.setItem("userDepartment", data.department || "");
       localStorage.setItem("userFirstName", data.firstName || "");

@@ -21,7 +21,33 @@ const DashWindowList = () => {
     department: userDepartment.toLowerCase() || "",
     transaction: "",
     isActive: true,
+    assignedTo: "",
   });
+
+  const transactionOptions = {
+    treasury: [
+      "Payment for Balance",
+      "Payment for Enrollment",
+      "Payment for Promi",
+      "Others",
+      "Validation Concerns",
+    ],
+    registrar: [
+       "Request Assessment",
+      "Request COR",
+      "Request TOR",
+      "Request CTC",
+      "Request for Dismissal",
+      "Others",
+      "Validation Concerns",
+    ],
+    admissions: [
+      "Enrollment",
+      "Submission of Documents",
+      "Others",
+      "Validation Concerns",
+    ],
+  };
 
   const loadWindows = async () => {
     setLoading(true);
@@ -53,6 +79,7 @@ const DashWindowList = () => {
       department: userDepartment.toLowerCase() || "",
       transaction: "",
       isActive: true,
+      assignedTo: "",
     });
     setOpen(true);
   };
@@ -103,7 +130,19 @@ const DashWindowList = () => {
 
   const columns = [
     { field: "windowNumber", headerName: "Window Number", flex: 1 },
+    { field: "assignedTo", headerName: "Assigned To", flex: 1, renderCell: (params) => params.row.assignedTo || "-" },
     { field: "transaction", headerName: "Transaction", flex: 1 },
+    {
+      field: "isAssigned",
+      headerName: "Assigned",
+      flex: 1,
+      renderCell: (params) =>
+        params.row.isAssigned ? (
+          <span className="text-blue-600 font-semibold">Assigned</span>
+        ) : (
+          <span className="text-gray-400">Not Assigned</span>
+        ),
+    },
     {
       field: "isActive",
       headerName: "Status",
@@ -218,8 +257,7 @@ const DashWindowList = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Transaction
                 </label>
-                <input
-                  type="text"
+                <select
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#32418C]"
                   value={newWindow.transaction}
                   onChange={(e) =>
@@ -229,9 +267,31 @@ const DashWindowList = () => {
                     })
                   }
                   required
-                />
+                >
+                  <option value="" disabled>
+                    Select transaction
+                  </option>
+                  {(transactionOptions[userDepartment?.toLowerCase()] || []).map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </div>
-
+              <div className="flex items-center gap-2 mt-2">
+                <input
+                  id="isAssigned"
+                  type="checkbox"
+                  checked={newWindow.isAssigned || false}
+                  onChange={(e) =>
+                    setNewWindow({ ...newWindow, isAssigned: e.target.checked })
+                  }
+                  className="h-4 w-4 text-[#32418C] border-gray-300 rounded focus:ring-[#32418C]"
+                />
+                <label htmlFor="isAssigned" className="text-sm text-gray-700">
+                  Assigned
+                </label>
+              </div>
               <div className="flex items-center gap-2 mt-2">
                 <input
                   id="isActive"
